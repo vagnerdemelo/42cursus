@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:12 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/10 13:53:01 by vade-mel         ###   ########.fr       */
+/*   Created: 2025/07/10 13:55:08 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/07/10 13:58:36 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@ void	ft_putchar(char c)
 	write (1, &c, 1);
 }
 
-void	ft_print_alphabet(void)
+void	ft_print_numbers(void)
 {
-	char	letter;
+	char	num;
 
-	letter = 'a';
-	while (letter <= 'z')
+	num = '0';
+	while (num <= '9')
 	{
-		ft_putchar(letter);
-		letter++;
+		ft_putchar(num);
+		num++;
 	}
 }
 
 /*int	main(void)
 {
-	ft_print_alphabet();
+	ft_print_numbers();
 	return (0);
 }
 */

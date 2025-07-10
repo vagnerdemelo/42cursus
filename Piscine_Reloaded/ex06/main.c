@@ -1,37 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:12 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/10 13:53:01 by vade-mel         ###   ########.fr       */
+/*   Created: 2025/07/10 13:53:42 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/07/10 13:53:44 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+void	ft_print_alphabet(void);
 
-void	ft_putchar(char c)
-{
-	write (1, &c, 1);
-}
-
-void	ft_print_alphabet(void)
-{
-	char	letter;
-
-	letter = 'a';
-	while (letter <= 'z')
-	{
-		ft_putchar(letter);
-		letter++;
-	}
-}
-
-/*int	main(void)
+int	main(void)
 {
 	ft_print_alphabet();
 	return (0);
 }
-*/
