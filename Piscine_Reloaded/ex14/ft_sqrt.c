@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:12 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/10 18:44:45 by vade-mel         ###   ########.fr       */
+/*   Created: 2025/07/10 19:15:54 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/07/10 19:18:24 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-
-void	ft_print_alphabet(void)
+int	ft_sqrt(int nb)
 {
-	char	letter;
+	int	n;
 
-	letter = 'a';
-	while (letter <= 'z')
+	n = 1;
+	if (nb > 0)
 	{
-		ft_putchar(letter);
-		letter++;
+		while (n * n <= nb)
+		{
+			if (n * n == nb)
+				return (n);
+			else if (n >= 46341)
+				return (0);
+			n++;
+		}
 	}
+	return (0);
 }
 
-/*int	main(void)
+/*#include <stdio.h>
+
+int	main(void)
 {
-	ft_print_alphabet();
+	printf("%d", ft_sqrt(10));
 	return (0);
 }
 */

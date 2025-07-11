@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:12 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/10 18:44:45 by vade-mel         ###   ########.fr       */
+/*   Created: 2025/07/10 19:34:45 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/07/10 21:09:29 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-
-void	ft_print_alphabet(void)
+int	ft_strlen(char *str)
 {
-	char	letter;
+	int	len;
 
-	letter = 'a';
-	while (letter <= 'z')
+	len = 0;
+	while (str[len] != '\0')
 	{
-		ft_putchar(letter);
-		letter++;
+		len++;
 	}
+	return (len);
 }
-
-/*int	main(void)
-{
-	ft_print_alphabet();
-	return (0);
-}
-*/

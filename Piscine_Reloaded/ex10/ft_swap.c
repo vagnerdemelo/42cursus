@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:12 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/10 18:44:45 by vade-mel         ###   ########.fr       */
+/*   Created: 2025/07/10 18:53:03 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/07/10 18:54:13 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-
-void	ft_print_alphabet(void)
+void	ft_swap(int *a, int *b)
 {
-	char	letter;
+	int	temp;
 
-	letter = 'a';
-	while (letter <= 'z')
-	{
-		ft_putchar(letter);
-		letter++;
-	}
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
-
-/*int	main(void)
-{
-	ft_print_alphabet();
-	return (0);
-}
-*/

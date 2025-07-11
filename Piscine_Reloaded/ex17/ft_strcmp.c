@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:52:12 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/10 18:44:45 by vade-mel         ###   ########.fr       */
+/*   Created: 2025/07/10 19:39:45 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/07/10 19:40:41 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-
-void	ft_print_alphabet(void)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	letter;
+	int	count;
 
-	letter = 'a';
-	while (letter <= 'z')
+	count = 0;
+	while (1)
 	{
-		ft_putchar(letter);
-		letter++;
+		if (s1[count] == '\0' && s2[count] == '\0')
+			return (0);
+		else if ((s1[count] < s2[count]) || (s1[count] > s2[count]))
+			return (s1[count] - s2[count]);
+		count++;
 	}
 }
-
-/*int	main(void)
-{
-	ft_print_alphabet();
-	return (0);
-}
-*/
