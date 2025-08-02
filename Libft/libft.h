@@ -6,7 +6,7 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 20:20:35 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/08/01 21:26:26 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:02:33 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void		*ft_calloc(size_t nmemb, size_t size);
 
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(char *src);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_itoa(int n);
 
 size_t		ft_strlen(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
