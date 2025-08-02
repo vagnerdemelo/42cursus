@@ -6,11 +6,11 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 20:59:39 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/21 21:06:37 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:59:39 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(char c)
+int	ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);

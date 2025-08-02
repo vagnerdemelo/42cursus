@@ -6,7 +6,7 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 20:56:03 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/08/02 14:35:37 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/02 17:00:51 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	while (s[0] != '\0')
+	while (s[len] != '\0')
 		len++;
 	return (len);
 }

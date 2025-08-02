@@ -6,11 +6,11 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:13:03 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/21 21:17:03 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:59:47 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(char c)
+int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 20:20:35 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/08/02 14:32:16 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/02 17:09:54 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-int			ft_isalnum(char c);
-int			ft_isalpha(char c);
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
+int			ft_isalnum(int c);
+int			ft_isalpha(int c);
 int			ft_isascii(int c);
 int			ft_atoi(char *str);
-int			ft_isdigit(char c);
-int			ft_isprint(char c);
+int			ft_isdigit(int c);
+int			ft_isprint(int c);
 int			ft_strncmp(char *s1, char *s2, unsigned int n);
 int			ft_toupper(int c);
 int			ft_lower(int c);
@@ -40,7 +46,7 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_putchar_fd(char c, int fd);
 
 char		*ft_strchr(const char *s, int c);
-char		*ft_strdup(char *src);
+char		*ft_strdup(const char *src);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
