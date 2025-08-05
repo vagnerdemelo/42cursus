@@ -6,13 +6,13 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 20:28:47 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/08/02 17:03:19 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:22:05 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
 

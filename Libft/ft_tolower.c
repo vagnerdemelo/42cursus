@@ -6,11 +6,11 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 20:28:59 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/28 20:29:28 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:28:37 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_lower(int c)
+int	ft_tolower(int c)
 {
 	if (c >= 'A' && c <= 'Z')
 		return (c + ('a' - 'A'));

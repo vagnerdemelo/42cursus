@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apuchill <apuchill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 14:36:51 by apuchill          #+#    #+#             */
-/*   Updated: 2020/01/26 19:44:33 by apuchill         ###   ########.fr       */
+/*   Updated: 2025/08/04 22:32:04 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ char	*ft_strrchr(const char *s, int c)
 	ini = s;
 	i = ft_strlen(s);
 	s = (s + i);
-	while (*s != *ini && c != *s)
+	if (c > 127)
+		c %= 256;
+	while (s >= ini && c != *s)
 		s--;
 	if (c == *s)
 		return ((char *)s);

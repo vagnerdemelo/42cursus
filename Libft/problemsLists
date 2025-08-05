@@ -1,7 +1,8 @@
 ft_strchr       : KO
-ft_atoi         : KO
 ft_substr       : KO
 ft_split        : KO
+ft_memmove		: KO
+ft_putnbr_fd	: KO
 
 
 Errors found:

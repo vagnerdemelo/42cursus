@@ -6,12 +6,12 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 22:28:50 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/08/02 17:21:49 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:24:22 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-/*add verift more one signal. eg: ++42, --42, +-42 and -+42*/
+
 int	ft_atoi(char *str)
 {
 	int	count;
@@ -25,6 +25,9 @@ int	ft_atoi(char *str)
 		count++;
 	while (str[count] == '+' || str[count] == '-')
 	{
+		if ((str[count - 1] == '+' || str[count - 1] == '-')
+			|| (str[count + 1] == '+' || str[count + 1] == '-'))
+			return (0);
 		if (str[count] == '-')
 			signal *= -1;
 		count++;
