@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gcc -Wall -Werror -Wextra "$@" -o a && ./a && rm -rf a

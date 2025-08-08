@@ -4,63 +4,25 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t n)
 {
-	char *tmp;
-	char *dest;
+	unsigned char	*tmp;
+	unsigned char	*dest;
 
-	tmp = (char *)src;
-	dest = (char *)dst;
+	tmp = (unsigned char *)src;
+	dest = (unsigned char *)dst;
+	if (tmp == dest || n == 0)
+		return (dst);
 	if (tmp < dest)
 	{
-		while (n--)
-			dest[n] = tmp[n];
+		while (n)
+		{
+			dest[n - 1] = tmp[n - 1];
+			n--;
+		}
 	}
 	else
 		ft_memcpy(dest, tmp, n);
 	return (dst);
 }
-
-// {
-// 	size_t	i;
-
-// 	printf("\nDST: --> [%p]\n", dst);
-// 	printf("SRC: --> [%p]\n", src);
-// 	printf("LEN: --> [%li]\n================\n\n", len);
-
-// 	if (!(dst) || !(src))
-// 		return (0);
-// 	i = 0;
-
-// 	printf("SIZE_T DST: --> %li\t| SIZE_T SRC: --> %li\t| LEN: --> %li\n================\n\n", (size_t)dst, (size_t)src, len );
-// 	printf("RESULT DST - SRC = %li\n", ((size_t)dst - (size_t)src));
-// 	if ((size_t)dst - (size_t)src < len)
-// 	{
-// 		i = len - 1;
-
-// 		printf("\nDST: --> [%s]\n", ((unsigned char *)dst));
-// 		printf("SRC: --> [%s]\n\n", ((unsigned char *)src));
-// 		while (i && i < len)
-// 		{
-// 			printf("\nI NO WHILE: --> %li\n", i);
-// 			printf("DST[%li] --> %c\n", i, ((unsigned char *)dst)[i]);
-// 			printf("SRC[%li] --> %c\n\n", i, ((unsigned char *)src)[i]);
-// 			printf("SRC ANTES --> %s\n", (unsigned char *)src);
-// 			printf("DST ANTES --> %s\n", (unsigned char *)dst);
-// 			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-// 			printf("SRC APÓS  --> %s\n", ((unsigned char *)src));
-// 			printf("DST APÓS  --> %s\n\n", ((unsigned char *)dst));
-// 			i--;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		while (i < len)
-// 		{
-// 			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-// 			i++;
-// 		}
-// 	}
-// 	return (dst);
-// }
 
 int main() {
     char src[] = "abcdef";
@@ -84,16 +46,39 @@ int main() {
     // Teste de sobreposição: mover dentro do mesmo buffer
     char buffer[20] = "1234567890";
 	char buffer2[20] = "1234567890";
+	char buffer3[20] = "1234567890";
+	char buffer4[] = "lorem ipsum dolor sit amet";
+	char buffer5[] = "lorem ipsum dolor sit amet";
+	char *dest;
+	char *dest2;
+
+	dest = buffer4 + 1;
+	dest2 = buffer5 + 1;
     printf("\nAntes da sobreposição:\n");
     printf("buffer:  %s\n", buffer);
 	printf("buffer2: %s\n", buffer2);
 
-    ft_memmove(buffer + 2, buffer, 8); // move "12345678" para posição 2
-	memmove(buffer + 2, buffer, 8);
+    ft_memmove(buffer, buffer + 2, 8); // move "12345678" para posição 2
+	memmove(buffer2, buffer2 + 2, 8);
 
     printf("\nDepois da sobreposição:\n");
     printf("buffer:  %s\n", buffer);
 	printf("buffer2: %s\n", buffer2);
+
+
+	if (buffer3 != ft_memmove(buffer3, buffer3 + 2, 8))
+		printf("dest's adress was not returned\n");
+	printf("\nBuffer3: %s\n", buffer3);
+
+	if (buffer4 != ft_memmove(buffer4, dest, 8))
+		printf("dest's adress was not returned\n");
+	printf("\nDest:    %s\n", dest);
+	printf("Buffer4: %s\n", buffer4);
+
+	if (buffer5 != memmove(buffer5, dest2, 8))
+		printf("dest2's adress was not returned\n");
+	printf("\ndest2:   %s\n", dest2);
+	printf("Buffer5: %s\n", buffer5);
 
     return 0;
 }
