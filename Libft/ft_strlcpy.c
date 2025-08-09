@@ -6,7 +6,7 @@
 /*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 20:49:46 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/07/28 20:50:05 by vade-mel         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:12:29 by vade-mel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	size_t	srcsize;
 	size_t	i;
 
-	if (!dst || !src)
-		return (0);
 	srcsize = ft_strlen(src);
 	i = 0;
 	if (dstsize != 0)

@@ -1,16 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 13:06:50 by vade-mel          #+#    #+#             */
-/*   Updated: 2025/08/09 15:59:36 by vade-mel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
+#include <stdio.h>
+#include <string.h>
 
 static int	count_words(const char *str, char c)
 {
@@ -30,6 +20,7 @@ static int	count_words(const char *str, char c)
 			trigger = 0;
 		str++;
 	}
+	printf("%i", i);
 	return (i);
 }
 
@@ -72,4 +63,25 @@ char	**ft_split(char const *s, char c)
 	}
 	split[j] = 0;
 	return (split);
+}
+
+int main(void)
+{
+	char	*str2 = "xxxxxxxxhello!";
+	char	sep2 = 'x';
+	char	**result2;
+	int	j;
+
+	result2 = ft_split(str2, sep2);
+	printf("\nString original: \"%s\"\n", str2);
+	printf("Separador: '%c'\n", sep2);
+	printf("Resultado do split:\n");
+
+	for (j = 0; result2[j] != NULL; j++)
+	{
+		printf("  Palavra %d: \"%s\"\n", j, result2[j]);
+		free(result2[j]);
+	}
+	free(result2);
+	return (0);
 }
