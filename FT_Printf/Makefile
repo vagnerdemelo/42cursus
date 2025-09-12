@@ -5,38 +5,40 @@
 #                                                     +:+ +:+         +:+      #
 #    By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/12 19:55:28 by vade-mel          #+#    #+#              #
-#    Updated: 2025/08/12 19:57:32 by vade-mel         ###   ########.fr        #
+#    Created: 2025/09/11 21:08:01 by vade-mel          #+#    #+#              #
+#    Updated: 2025/09/11 21:08:03 by vade-mel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-CFLAGS	= -Wall -Wextra -Werror
-LIB1	= ar -rcs
-LIB2	= ranlib
-RM		= /bin/rm -f
+SRCS = ft_printf.c \
+       ft_print_string.c \
+       ft_print_ptr.c \
+       ft_print_char.c \
+       ft_print_hex.c \
+       ft_print_nbr.c \
+       ft_print_uns.c
 
-INCLUDE = libft.h
+OBJS = $(SRCS:.c=.o)
 
-SRCS 	= 
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I.
 
-OBJS 	= $(SRCS:.c=.o)
+.PHONY: all clean fclean re
 
-all:		$(NAME)
+all: $(NAME)
 
-$(NAME):	$(OBJS) $(INCLUDE)
-			$(LIB1) $(NAME) $(OBJS)
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
-.c.o:
-			gcc $(CFLAGS) -c $< -o $(<:.c=.o)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-			$(RM) $(OBJS)
+	rm -f $(OBJS)
 
-fclean:		clean
-			$(RM) $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:			fclean all
-
-.PHONY:		all clean fclean re
+re: fclean all
