@@ -1,0 +1,216 @@
+step to step bor2beroot:
+
+1- install debian with partitioning
+	sda
+	|__sda1							/boot
+	|__sda2
+	|__sda5
+		|_sda5_crypt
+			|__LVMGroup-root		/
+			|__LVMGroup-swap		[SWAP]
+			|__LVMGroup-home		/home
+			|__LVMGroup-var 		/var
+			|__LVMGroup-srv			/srv
+			|__LVMGroup-tmp			/tmp
+			|__LVMGroup-var--log	/var/log
+
+2- install sudo
+	~$ su -
+	~$ apt update 
+	~$ apt install sudo
+	~$ adduser vade-mel sudo
+	~$ getent group sudo
+	~$ reboot
+
+3- Resize Logical Volumes 
+	~$ sudo lvresize -r -L 10G /dev/LVMGroup/root
+	~$ sudo lvresize -r -L 5G /dev/LVMGroup/home
+	~$ sudo lvresize -r -L 4G /dev/LVMGroup/var-log
+	~$ sudo lvresize -r -L 3G /dev/LVMGroup/var
+	~$ sudo lvresize -r -L 3G /dev/LVMGroup/tmp
+	~$ sudo lvresize -r -L 3G /dev/LVMGroup/srv
+	~$ sudo vgs
+	~$ sudo swapoff -a
+	~$ sudo lvresize -L 2.29G /dev/LVMGroup/swap
+	~$ sudo mkswap /dev/LVMGroup/swap
+	~$ sudo swapon -a
+	~$ lsblk
+
+4- Configuration sudo 
+	~$ sudo visudo
+		Defaults        env_reset
+		Defaults        mail_badpass
+		Defaults        badpass_message="Password is wrong. Please try again."
+		Defaults        logfile="/var/log/sudo/sudo.log"
+		Defaults        log_input, log_output
+		Defaults        iolog_dir="/var/log/sudo"
+		Defaults        requiretty
+		Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+	~$ sudo mkdir -p /var/log/sudo
+	~$ sudo touch /var/log/sudo/sudo.log
+
+5- Install and configuration ssh
+	~$ sudo apt install openssh-server
+	~$ sudo nano /etc/ssh/sshd_config 
+		Port 4242 
+		PermitRootLogin no
+
+6- Install and configuration firewall - UFW
+	~$ sudo apt install ufw
+	~$ sudo ufw enable 
+	~$ sudo ufw allow 4242
+	~$ ssh vade-mel@127.0.0.1 -p 4242 
+
+	Outside VM
+		**Remember to do port forward in VirtualBox 4242:4242
+		~$ netstat -tuln | grep 4242 
+		~$ ssh vade-mel@127.0.0.1 -p 4242
+
+7- Password policy
+	~$ sudo nano /etc/login.defs
+		PASS_MAX_DAYS   30   
+		PASS_MIN_DAYS   2
+		PASS_WARN_AGE   7
+	~$ sudo apt install libpam-pwquality -y
+	~$ sudo nano /etc/pam.d/common-password
+		password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username difok=7 enforce_for_root
+
+	~$ sudo reboot
+	~$ passwd
+	~$ sudo chage -l vade-mel
+	~$ sudo chage -M 30 -m 2 -W 7 vade-mel
+	~$ sudo passwd root
+	~$ sudo chage -M 30 -m 2 -W 7 root
+	~$ sudo chage -l root
+
+8- Creating users and groups 
+	~$ sudo adduser new_user
+	~$ getent passwd new_user
+	~$ sudo addgroup user42
+	~$ sudo adduser vade-mel user42
+
+9- Crontab configuration *** VOLTAR NESSA CONFIG POIS O WALL MESSAGE NAO ESTA SENDO MOSTRADO NAS SESSÕES SSH ****
+	~$ sudo touch /usr/local/bin/monitoring.sh
+	~$ sudo chmod 755 /usr/local/bin/monitoring.sh
+	~$ sudo nano /usr/local/bin/monitoring.sh
+		copy monitoring.sh file from project folder.
+	~$ sudo visudo
+		# Allow members of group sudo to execute any command
+		%sudo   ALL=(ALL:ALL) ALL
+		vade-mel        ALL=(ALL) NOPASSWD: /usr/local/bin/monitoring.sh
+	~$ sudo systemctl enable cron.service
+	~$ sudo reboot
+	~$ sudo crontab -u root -e 
+		*/10 * * * * /usr/local/bin/monitoring.sh
+
+10- Install and configur LLMP stack
+	~$ sudo apt update
+	~$ sudo apt install lighttpd
+	~$ sudo ufw allow 80
+	~$ sudo systemctl enable lighttpd
+	~$ sudo systemctl start lighttpd
+	~$ sudo systemctl status lighttpd
+
+11- Install and configure MariaDB
+	~$ sudo apt install mariadb-server
+	~$ sudo mariadb-secure-installation
+		OK, successfully used password, moving on...
+
+		Setting the root password or using the unix_socket ensures that nobody
+		can log into the MariaDB root user without the proper authorisation.
+
+		You already have your root account protected, so you can safely answer 'n'.
+
+		Switch to unix_socket authentication [Y/n] n
+		 ... skipping.
+
+		You already have your root account protected, so you can safely answer 'n'.
+
+		Change the root password? [Y/n] n
+		 ... skipping.
+
+		By default, a MariaDB installation has an anonymous user, allowing anyone
+		to log into MariaDB without having to have a user account created for
+		them.  This is intended only for testing, and to make the installation
+		go a bit smoother.  You should remove them before moving into a
+		production environment.
+
+		Remove anonymous users? [Y/n] y
+		SQL executed without errors!
+		The operation might have been successful, or it might have not done anything.
+
+		Normally, root should only be allowed to connect from 'localhost'.  This
+		ensures that someone cannot guess at the root password from the network.
+
+		Disallow root login remotely? [Y/n] y
+		SQL executed without errors!
+		The operation might have been successful, or it might have not done anything.
+
+		By default, MariaDB comes with a database named 'test' that anyone can
+		access.  This is also intended only for testing, and should be removed
+		before moving into a production environment.
+
+		Remove test database and access to it? [Y/n] y
+		 - Dropping test database...
+		SQL executed without errors!
+		The operation might have been successful, or it might have not done anything.
+		 - Removing privileges on test database...
+		SQL executed without errors!
+		The operation might have been successful, or it might have not done anything.
+
+		Reloading the privilege tables will ensure that all changes made so far
+		will take effect immediately.
+
+		Reload privilege tables now? [Y/n] y
+	~$ sudo mariadb
+		MariaDB [(none)]> CREATE DATABASE `vade-mel`;
+		MariaDB [(none)]> GRANT ALL ON `vade-mel`.* TO 'vade-mel'@'localhost'IDENTIFIED BY 'Neneco13' WITH GRANT OPTION;
+		MariaDB [(none)]> FLUSH PRIVILEGES;
+		MariaDB [(none)]> EXIT;
+	~$ mariadb -u vade-mel -p 
+		MariaDB [(none)]> SHOW DATABASES;
+		MariaDB [(none)]> EXIT;
+
+12- Install PHP and Extensions
+	~$ sudo apt install php-fpm php-mysql php-curl php-gd php-zip -y
+	~$ dpkg -l | grep php
+	~$ php -v
+	~$ sudo nano /etc/lighttpd/conf-available/15-fastcgi-php.conf
+		fastcgi.server += ( ".php" => 
+			("localhost" =>
+				(
+					"socket" => "/run/php/php8.4-fpm.sock", # replace with php version, check ls /run/php
+					"broken-scriptfilename" => "enable"
+				)
+			)
+		)
+	~$ sudo lighty-enable-mod fastcgi
+	~$ sudo lighty-enable-mod fastcgi-php
+	~$ sudo systemctl reload lighttpd
+	~$ sudo systemctl status lighttpd
+
+13- Wordpress setup
+	~$ sudo apt install wget -y
+	~$ sudo wget https://wordpress.org/latest.tar.gz -P /var/www/html
+	~$ sudo tar -xzvf /var/www/html/latest.tar.gz -C /var/www/html/
+	~$ sudo rm /var/www/html/latest.tar.gz 
+	~$ sudo cp -r /var/www/html/wordpress/* /var/www/html/ 
+	~$ sudo rm -rf /var/www/html/wordpress/
+	~$ sudo cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+	~$ sudo chown -R www-data:www-data /var/www/html/
+	~$ sudo chmod -R 755 /var/www/html/
+	~$ sudo vim /var/www/html/wp-config.php 
+		define( 'DB_NAME', 'vade-mel' );
+
+		/** Database username */
+		define( 'DB_USER', 'vade-mel' );
+
+		/** Database password */
+		define( 'DB_PASSWORD', 'Neneco13' );
+	~$ sudo systemctl reload lighttpd
+	On browser, access localhost:8080 **Remember to do port forward in VirtualBox 8080:80
+		To configure username, password and email
+		Login to the Wordpress
+
+14- Setup service **Optional Redis** understand teh reasons.
