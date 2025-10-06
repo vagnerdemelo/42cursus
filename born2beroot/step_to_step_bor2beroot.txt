@@ -213,4 +213,4 @@ step to step bor2beroot:
 		To configure username, password and email
 		Login to the Wordpress
 
-14- Setup service **Optional Redis** understand teh reasons.
+14- Setup service **Optional Redis** understand teh reasons..
