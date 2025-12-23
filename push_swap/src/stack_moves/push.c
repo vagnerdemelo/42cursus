@@ -1,0 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 17:12:03 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/12/23 17:12:04 by vade-mel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+/**
+ * @brief Moves the top element from lst_a to lst_b.
+ *
+ * @param lst_a The pointer to the stack that will give a node.
+ * @param lst_b The pointer to the stack that will receive a node.
+ */
+static void	lst_push(t_list **lst_a, t_list **lst_b)
+{
+	t_list	*node_to_push;
+
+	if ((*lst_a) == NULL)
+		return ;
+	node_to_push = *lst_a;
+	*lst_a = (*lst_a)->next;
+	node_to_push->next = *lst_b;
+	*lst_b = node_to_push;
+}
+
+void	pa(t_list **lst_b, t_list **lst_a)
+{
+	write(1, "pa\n", 3);
+	lst_push(lst_b, lst_a);
+}
+
+void	pb(t_list **lst_a, t_list **lst_b)
+{
+	write(1, "pb\n", 3);
+	lst_push(lst_a, lst_b);
+}
