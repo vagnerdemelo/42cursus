@@ -1,0 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 16:52:16 by vade-mel          #+#    #+#             */
+/*   Updated: 2025/12/23 16:52:24 by vade-mel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "pipex.h"
+
+static void	close_pipes(t_command command, int cmd_num)
+{
+	int	i;
+
+	if (command.fd_file_in != -1)
+		close(command.fd_file_in);
+	if (command.fd_file_out != -1)
+		close(command.fd_file_out);
+	i = 0;
+	if (cmd_num == 0)
+		close_pipe(command.pipes[0]);
+	else
+		while (i < cmd_num)
+			close_pipe(command.pipes[i++]);
+}
+
+static void	change_input_and_output(t_command command, int type, int cmd_num)
+{
+	if (type == FIRST)
+		set_dup2(command.fd_file_in, command.pipes[cmd_num].fd_pipe[WRITE_FD]);
+	else if (type == MID)
+		set_dup2(command.pipes[cmd_num - 1].fd_pipe[READ_FD],
+			command.pipes[cmd_num].fd_pipe[WRITE_FD]);
+	else if (type == LAST)
+		set_dup2(command.pipes[cmd_num - 1].fd_pipe[READ_FD],
+			command.fd_file_out);
+}
+
+static void	error_message(char *cmd, int *return_code)
+{
+	if (!cmd || access(cmd, F_OK) != 0)
+	{
+		ft_putendl_fd(": Command not found", 2);
+		*return_code = 127;
+	}
+	else if (access(cmd, X_OK) != 0)
+	{
+		ft_putendl_fd(": Permission denied", 2);
+		*return_code = 126;
+	}
+}
+
+void	exec_process(t_command command, int type, int cmd_num)
+{
+	int		return_code;
+	char	*cmd;
+	char	**args;
+
+	return_code = 1;
+	if (type == MID || (type == FIRST && command.fd_file_in != -1)
+		|| (type == LAST && command.fd_file_out != -1))
+	{
+		args = ft_split(command.argv[cmd_num + 2], ' ');
+		cmd = expand_path(args[0], command.path);
+		if (cmd && access(cmd, F_OK | X_OK) == 0)
+		{
+			change_input_and_output(command, type, cmd_num);
+			close_pipes(command, cmd_num);
+			execve(cmd, args, command.envp);
+		}
+		ft_putstr_fd(args[0], 2);
+		error_message(cmd, &return_code);
+		free(cmd);
+		ft_free_split(args);
+	}
+	close_pipes(command, cmd_num);
+	free_all(command);
+	exit(return_code);
+}
