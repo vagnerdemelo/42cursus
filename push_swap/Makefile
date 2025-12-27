@@ -6,12 +6,11 @@
 #    By: vade-mel <vade-mel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/23 17:06:10 by vade-mel          #+#    #+#              #
-#    Updated: 2025/12/23 17:07:01 by vade-mel         ###   ########.fr        #
+#    Updated: 2025/12/27 19:34:33 by vade-mel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= push_swap
-NAME_BONUS	:= checker
 CFLAGS		:= -Wextra -Wall -Werror -g3
 
 LIBFT_DIR	:= lib/libft
@@ -48,34 +47,7 @@ SRCS		:= src/stack_moves/rev_rotate.c \
 				src/linked_list/lst_contains.c
 OBJS		:= ${SRCS:src/%.c=obj/%.o}
 
-SRCS_BONUS	:= src_bonus/stack_moves/rev_rotate.c \
-				src_bonus/stack_moves/swap.c \
-				src_bonus/stack_moves/push.c \
-				src_bonus/stack_moves/rotate.c \
-				src_bonus/main.c \
-				src_bonus/utils/utils_list.c \
-				src_bonus/utils/get_next_line_utils.c \
-				src_bonus/utils/make_stack.c \
-				src_bonus/utils/utils.c \
-				src_bonus/utils/get_next_line.c \
-				src_bonus/execute_moves.c \
-				src_bonus/linked_list/ft_lstnew.c \
-				src_bonus/linked_list/create_node.c \
-				src_bonus/linked_list/lst_get_max_value.c \
-				src_bonus/linked_list/ft_lstadd_back.c \
-				src_bonus/linked_list/ft_lstdelone.c \
-				src_bonus/linked_list/ft_lstadd_front.c \
-				src_bonus/linked_list/lst_get_min_value.c \
-				src_bonus/linked_list/lst_get_index.c \
-				src_bonus/linked_list/ft_lstclear.c \
-				src_bonus/linked_list/ft_lstlast.c \
-				src_bonus/linked_list/ft_lstsize.c \
-				src_bonus/linked_list/lst_get_node.c \
-				src_bonus/linked_list/lst_contains.c
-OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj_bonus/%.o}
-
 all: ${NAME}
-bonus: ${NAME_BONUS}
 
 ${NAME}: ${LIBFT} ${OBJS}
 	@${CC} ${OBJS} ${LIBS} ${HEADERS} -o ${NAME}
@@ -107,6 +79,25 @@ fclean: clean
 	@make -C ${LIBFT_DIR} fclean
 
 re: fclean all
-re_bonus: fclean bonus
+
+start: all
+	@if [ -z "$(N)" ]; then \
+		echo "Usage: make start N=<number>"; \
+		exit 1; \
+	fi
+	@./$(NAME) $$(shuf -i 1-$(N) -n $(N))
+
+test: all
+	@if [ -z "$(N)" ]; then \
+		echo "Usage: make test N=<number>"; \
+		exit 1; \
+	fi
+	@ARG=$$(shuf -i 1-$(N) -n $(N) | tr '\n' ' '); \
+	echo "Testing with $(N) numbers: $$ARG"; \
+	RESULT=$$(./$(NAME) $$ARG | ./checker_linux $$ARG); \
+	MOVES=$$(./$(NAME) $$ARG | wc -l); \
+	echo "Result: $$RESULT"; \
+	echo "Moves: $$MOVES"
+
 
 .PHONY: all clean fclean re re_bonus libft
